@@ -5,9 +5,9 @@ import './polyfill'
 const trpc = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: 'http://localhost:3000',
-    }),
-  ],
+      url: 'http://localhost:3000'
+    })
+  ]
 })
 
 async function main() {
@@ -22,9 +22,13 @@ async function main() {
   //    ^?
   console.log('Created user:', createdUser)
 
-  const user = await trpc.userById.query('1')
+  const user1 = await trpc.userById.query('1')
   //    ^?
-  console.log('User 1:', user)
+  console.log('Query User 1:', user1)
+
+  const newUsers = await trpc.userDelete.mutate('2')
+  //    ^?
+  console.log('Delete User 2:', newUsers)
 }
 
 main().catch(console.error)

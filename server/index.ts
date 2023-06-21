@@ -3,6 +3,7 @@ import { z } from 'zod'
 import type { User } from './db'
 import { db } from './db'
 import { publicProcedure, router } from './trpc'
+import { loggedProcedure } from './middleware'
 
 const appRouter = router({
   userList: publicProcedure.query(async () => {
@@ -19,11 +20,15 @@ const appRouter = router({
       const user = await db.user.create(input)
       return user
     }),
+  userDelete: loggedProcedure.input(z.string()).mutation(async ({ input }: { input: string }) => {
+    const user = await db.user.deleteById(input)
+    return user
+  })
 })
 
 export type AppRouter = typeof appRouter
 
 const server = createHTTPServer({
-  router: appRouter,
+  router: appRouter
 })
 server.listen(3000)
