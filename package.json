@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "ni:trpc": "ni",
+    "ni:server": "cd server && ni",
+    "ni:client": "cd client && ni",
+    "install": "run-p ni:* -r",
     "dev:server": "esno server",
     "dev:client": "esno client",
-    "dev": "run-p dev:* --print-label",
+    "dev": "run-p dev:* -c --print-label",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "npx simple-git-hooks"
